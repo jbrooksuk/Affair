@@ -1,0 +1,4 @@
+Affair
+======
+
+JavaScript events library
