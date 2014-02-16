@@ -19,4 +19,22 @@
 		self.Affair = exAffair;
 		return this;
 	};
+
+	var Toolkit = {
+		on: function() {
+
+		},
+		once: function() {
+
+		},
+		off: function() {
+
+		},
+		emit: function() {
+
+		},
+		remove: function() {
+			
+		}
+	}
 }).call(this);
