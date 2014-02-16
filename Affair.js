@@ -2,6 +2,11 @@
 	// Global object
 	var self = this;
 
+	// Some methods we need;
+	var forEach        = Array.prototype.forEach,
+		hasOwnProperty = Object.prototype.hasOwnProperty,
+		slice          = Array.prototype.slice;
+
 	// Use by noConflict method
 	var exAffair = self.Affair;
 
@@ -34,7 +39,7 @@
 
 		},
 		remove: function() {
-			
+
 		}
 	}
 }).call(this);
