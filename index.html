@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Affair Demo</title>
+</head>
+<body>
+<script src='Affair.js'></script>
+<script>
+	(function() {
+		Affair.on('test', function() {
+			alert('Test Event!');
+		});
+
+		setTimeout(function() {
+			Affair.trigger('test');
+		}, 2500);
+	})();
+</script>
+</body>
+</html>

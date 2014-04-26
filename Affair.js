@@ -6,8 +6,12 @@
 	var previousAffair = root.Affair;
 
 	// Create local references to array methods we'll want to use later.
-	var array = [];
-	var slice = array.slice;
+	var breaker       = {};
+	var ArrayProto    = Array.prototype;
+	var array         = [];
+	var slice         = array.slice;
+	var nativeForEach = ArrayProto.forEach,
+		nativeKeys    = ArrayProto.keys;
 
 	// The top-level namespace. All public Affair classes and modules will be attached to this. 
 	var Affair;
@@ -18,10 +22,6 @@
 	}
 
 	Affair.VERSION = '0.1.0';
-
-	// Require Underscore
-	var _ = root._;
-	if(!_ && (typeof require !== 'undefined')) _ = require('underscore');
 
 	Affair.noConflict = function() {
 		root.Affair = previousAffair;
@@ -44,7 +44,7 @@
 		once: function(name, callback, context) {
 			if (!eventsApi(this, 'once', name, [callback, context]) || !callback) return this;
 			var self = this;
-			var once = _.once(function() {
+			var once = once(function() {
 				self.off(name, once);
 				callback.apply(this, arguments);
 			});
@@ -63,7 +63,7 @@
 				this._events = void 0;
 				return this;
 			}
-			names = name ? [name] : _.keys(this._events);
+			names = name ? [name] : keys(this._events);
 			for (i = 0, l = names.length; i < l; i++) {
 				name = names[i];
 				if (events = this._events[name]) {
@@ -110,7 +110,7 @@
 			for (var id in listeningTo) {
 				obj = listeningTo[id];
 				obj.off(name, callback, this);
-				if (remove || _.isEmpty(obj._events)) delete this._listeningTo[id];
+				if (remove || isEmpty(obj._events)) delete this._listeningTo[id];
 			}
 			return this;
 		}
@@ -163,10 +163,10 @@
 	// Inversion-of-control versions of `on` and `once`. Tell *this* object to
 	// listen to an event in another object ... keeping track of what it's
 	// listening to.
-	_.each(listenMethods, function(implementation, method) {
+	each(listenMethods, function(implementation, method) {
 		Events[method] = function(obj, name, callback) {
 			var listeningTo = this._listeningTo || (this._listeningTo = {});
-			var id = obj._listenId || (obj._listenId = _.uniqueId('l'));
+			var id = obj._listenId || (obj._listenId = uniqueId('l'));
 			listeningTo[id] = obj;
 			if (!callback && typeof name === 'object') callback = this;
 			obj[implementation](name, callback, this);
@@ -178,5 +178,80 @@
 	Events.bind   = Events.on;
 	Events.unbind = Events.off;
 
-	_.extend(Affair, Events);
+	extend(Affair, Events);
+
+	function keys(obj) {
+		var isObject = function(obj) {
+			return obj === Object(obj);
+		}
+
+		if (!isObject(obj)) return [];
+		if (nativeKeys) return nativeKeys(obj);
+		var keys = [];
+		for (var key in obj) if (has(obj, key)) keys.push(key);
+		return keys;
+	};
+
+	function extend(obj) {
+		each(slice.call(arguments, 1), function(source) {
+			if (source) {
+				for (var prop in source) {
+					obj[prop] = source[prop];
+				}
+			}
+		});
+		return obj;
+	};
+
+	function each(obj, iterator, context) {
+		if (obj == null) return obj;
+		if (nativeForEach && obj.forEach === nativeForEach) {
+			obj.forEach(iterator, context);
+		} else if (obj.length === +obj.length) {
+			for (var i = 0, length = obj.length; i < length; i++) {
+				if (iterator.call(context, obj[i], i, obj) === breaker) return;
+			}
+		} else {
+			var _keys = keys(obj);
+			for (var i = 0, length = _keys.length; i < length; i++) {
+				if (iterator.call(context, obj[_keys[i]], _keys[i], obj) === breaker) return;
+			}
+		}
+		return obj;
+	};
+
+	function once(func) {
+		var ran = false, memo;
+		return function() {
+			if (ran) return memo;
+			ran = true;
+			memo = func.apply(this, arguments);
+			func = null;
+			return memo;
+		};
+	};
+
+	function has(obj, key) {
+		return hasOwnProperty.call(obj, key);
+	}
+
+	function isArray(obj) {
+		return toString.call(obj) == '[object Array]';
+	};
+
+	function isString(obj) {
+		return toString.call(obj) === '[object String]';
+	};
+
+	function isEmpty(obj) {
+		if (obj == null) return true;
+		if (isArray(obj) || isString(obj)) return obj.length === 0;
+		for (var key in obj) if (has(obj, key)) return false;
+		return true;
+	};
+
+	function uniqueId(prefix) {
+		var id = ++idCounter + '';
+		return prefix ? prefix + id : id;
+	};
 }).call(this);
