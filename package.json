@@ -1,0 +1,24 @@
+{
+  "name": "Affair",
+  "version": "0.1.0",
+  "description": "JavaScript events library",
+  "main": "Affair.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbrooksuk/Affair.git"
+  },
+  "keywords": [
+    "affair",
+    "events",
+    "bindings"
+  ],
+  "author": "James Brooks <jbrooksuk@me.com> (https://james-brooks.uk/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbrooksuk/Affair/issues"
+  },
+  "homepage": "https://github.com/jbrooksuk/Affair"
+}
