@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Affair Demo</title>
+    <title>Affair Demo</title>
 </head>
 <body>
-<script src='Affair.js'></script>
-<script>
-	(function() {
-		Affair.on('test', function() {
-			alert('Test Event!');
-		});
+    <p>In 1 second, Affair will trigger an alert.</p>
+    <script src='./Affair.js'></script>
+    <script>
+        (function() {
+            Affair.on('test', function() {
+                alert('Test Event!');
+            });
 
-		setTimeout(function() {
-			Affair.trigger('test');
-		}, 2500);
-	})();
-</script>
+            setTimeout(function() {
+                Affair.trigger('test');
+            }, 1000);
+        })();
+    </script>
 </body>
 </html>
