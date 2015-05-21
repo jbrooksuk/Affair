@@ -1,0 +1,22 @@
+{
+  "name": "Affair",
+  "main": "Affair.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jbrooksuk/Affair",
+  "authors": [
+    "James Brooks <jbrooksuk@me.com>"
+  ],
+  "description": "JavaScript events library.",
+  "keywords": [
+    "events",
+    "bindings"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
