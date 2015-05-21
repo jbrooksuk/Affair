@@ -1,6 +1,6 @@
 {
   "name": "Affair",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JavaScript events library",
   "main": "Affair.js",
   "scripts": {
