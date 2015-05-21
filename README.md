@@ -7,19 +7,19 @@ Lightweight JavaScript events library, based on Backbone.js Events, but without 
 
 # API
 
-### on - `object.on(event, callback, [context])` - *Aliased to: `bind`*
+#### on - `object.on(event, callback, [context])` - *Aliased to: `bind`*
 
-### off - `object.off([event], [callback], [context])` - *Aliased to: `unbind`*
+#### off - `object.off([event], [callback], [context])` - *Aliased to: `unbind`*
 
-### trigger - `object.trigger(event, [*args])`
+#### trigger - `object.trigger(event, [*args])`
 
-### once - `object.once(event, callback, [context])`
+#### once - `object.once(event, callback, [context])`
 
-### listenTo - `object.listenTo(other, event, callback)`
+#### listenTo - `object.listenTo(other, event, callback)`
 
-### stopListening - `object.stopListening([other], [event], [callback])`
+#### stopListening - `object.stopListening([other], [event], [callback])`
 
-### listenToOnce - `object.listenToOnce(other, event, callback)`
+#### listenToOnce - `object.listenToOnce(other, event, callback)`
 
 # License
 [MIT](http://jbrooksuk.mit-license.org)
